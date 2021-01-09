@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlanRepository } from '../repository/plan.repository';
 import { IPlan } from '../entity/plan.entitiy';
 import { PlanService } from './plan.service';
-import config from '../config';
 import Entities from '../entity';
 
 describe('PlanService', () => {

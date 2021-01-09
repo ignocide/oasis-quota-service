@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entity/user.entitiy';
 import { UserRepository } from '../repository/user.repository';
 import * as firebase from 'firebase-admin';
-import config from '../config';
+import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class UserService {
   expiresIn = 60 * 60 * 24 * 5 * 1000;
@@ -11,13 +11,14 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: UserRepository,
+    private configService: ConfigService,
   ) {
     this.initializeFirebase();
   }
 
   initializeFirebase() {
     firebase.initializeApp({
-      credential: firebase.credential.cert(config.firebase),
+      credential: firebase.credential.cert(this.configService.get('firebase')),
     });
   }
 

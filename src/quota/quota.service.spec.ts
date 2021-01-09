@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { QuotaService } from './quota.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { QuotaRepository } from '../repository/quota.repository';
-import config from '../config';
 import Entities from '../entity';
 import { IQutoa } from '../entity/quota.entitiy';
 import * as dayjs from 'dayjs';
