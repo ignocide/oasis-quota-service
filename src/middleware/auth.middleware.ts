@@ -11,7 +11,7 @@ export class AuthMiddleware implements NestMiddleware {
 
     if (!sessionCookie) {
       // 로그인이 필요한 경우
-      res.status(301).redirect('/login');
+      res.status(401).send('UNAUTHORIZED REQUEST!');
       return;
     }
 

@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { ReqUser } from './decorator/reqUser.decorator';
+import { User } from './decorator/user.decorator';
 
 @Controller()
 export class AppController {
@@ -12,7 +12,7 @@ export class AppController {
   }
 
   @Get('ping')
-  ping(@ReqUser() user) {
+  ping(@User() user) {
     return `${user.firebaseUid} say ping, I say pong`;
   }
 }

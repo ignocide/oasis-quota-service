@@ -8,7 +8,7 @@ import {
   Put,
   Req,
 } from '@nestjs/common';
-import { ReqUserId } from '../decorator/reqUser.decorator';
+import { UserId } from '../decorator/user.decorator';
 import { User } from '../entity/user.entitiy';
 import { PlanService } from './plan.service';
 
@@ -26,14 +26,14 @@ export class PlanController {
   constructor(private readonly planService: PlanService) {}
 
   @Get()
-  async getPlans(@ReqUserId() userId) {
+  async getPlans(@UserId() userId) {
     const list = await this.planService.readListByUserId(userId);
 
     return { list };
   }
 
   @Post()
-  async createPlan(@ReqUserId() userId, @Body() rawPlan) {
+  async createPlan(@UserId() userId, @Body() rawPlan) {
     rawPlan.user = new User({ id: userId });
 
     await this.planService.create(rawPlan);
@@ -42,14 +42,14 @@ export class PlanController {
   }
 
   @Get('/planId')
-  async readPlan(@ReqUserId() userId, @Param('planId') planId) {
+  async readPlan(@UserId() userId, @Param('planId') planId) {
     const plan = await this.planService.read(userId, planId);
 
     return plan;
   }
   @Put('/:planId')
   async updatePlan(
-    @ReqUserId() userId,
+    @UserId() userId,
     @Body() updatePlan: ICreatePlan,
     @Param('planId') planId,
   ) {
@@ -59,7 +59,7 @@ export class PlanController {
   }
 
   @Delete('/:planId')
-  async deletePlan(@ReqUserId() userId, @Param('planId') planId) {
+  async deletePlan(@UserId() userId, @Param('planId') planId) {
     await this.planService.delete(planId, userId);
 
     return 'OK';

@@ -14,23 +14,26 @@ import { UserModule } from './user/user.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { AuthMiddleware } from './middleware/auth.middleware';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import loadConfig from './config/configuration';
+import { NoteModule } from './note/note.module';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [loadConfig],
+      load: [configuration],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         ...configService.get<any>('database'),
+        synchronize: true,
         entities: Entities,
       }),
     }),
     MainModule,
     UserModule,
+    NoteModule,
   ],
   controllers: [AppController],
   providers: [AppService],

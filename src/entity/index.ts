@@ -1,5 +1,5 @@
 import { Plan } from './plan.entitiy';
 import { Quota } from './quota.entitiy';
 import { User } from './user.entitiy';
-
-export default [Plan, Quota, User];
+import { Note } from './note.entitiy';
+export default [Plan, Quota, User, Note];
